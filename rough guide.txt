@@ -1,0 +1,9 @@
+You will need to install firmware-atheros bluetooth bluemon (I also installed bluez* rfkill and rfcomm)
+
+copy the rampatch and TLV to /lib/firmware/qca/
+(check dmesg to clarify what files the bluetooth tries to load)
+
+blacklist ath10k_pci module
+make sure ath10k_core and btusb modules are loaded
+
+install kernel same as the 4.18.6 with dpkg
