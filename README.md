@@ -13,3 +13,7 @@ At the moment the only one is version 5.7 'Mainline' updated from current used v
 - Deb files are in respective kernel version folders
 
 
+
+**Android-common-mainline**
+
+Not really of any interest, it's just the kernel I built to boot TWRP. I didn't focus on supporting anything, I just wanted to boot TWRP, and now I am storing them here for if I need them.
