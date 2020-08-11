@@ -1,0 +1,102 @@
+NOTE: THIS WILL NOT FLASH ANDROID, YOU WILL HAVE TO TRY PORT FIRMWARE AND SO MANY OTHER THINGS.
+THIS CAN FLASH W10M AND LINUX WITH ZIP BUT YOU WILL HAVE TO MAKE THE ZIP YOURSELF, LINUX IS UNTESTED ATM
+
+BE CAREFUL, YOU COULD EASILY WIPE PARTITIONS ON THE PHONE THAT WILL BRICK THE DEVICE.
+
+
+
+
+REQUIRED:
+
+- Download Android Image Kitchen tools:
+https://forum.xda-developers.com/showthread.php?t=2073775
+
+- Download TWRP for angler:
+https://dl.twrp.me/angler/twrp-3.4.0-0-angler.img.html
+
+- Clone/download my ramdisk files:
+https://github.com/Empyreal96/initrd-twrp-cityman
+
+Download my android kernel with ntfs support:
+https://drive.google.com/file/d/1IOTTgjgbVF2_3UoMa90gW7P_qH6XAsJz/view?usp=drivesdk
+
+- Download grub.cfg for Android boot:
+https://drive.google.com/file/d/1acYRobz52nSuexOZ7ZEL1CiubxQoHcih/view?usp=drivesdk
+
+- Grab the dtb file and bootaa64.efi from Linux guide.
+
+- Make sure Bootloader is Unlocked. bootshim and uefi loader (WoA Deployer for details)
+
+
+
+
+NOTE: When I did this I was using my SD card to boot.. but I will try to explain
+my method how to normally with the Phone (Fadil booted straight from phone I think)
+
+
+
+1) Unpack the downloaded TWRP img for Angler using Android Image Kitchen,
+you will then have a 'ramdisk' folder in your Android Image Kitchen folder..
+
+
+2) Delete ALL files INSIDE Android Image Kitchen's ramdisk folder
+
+
+3) copy my ramdisk files into Android Image Kitchen's ramdisk folder.
+
+
+4) OPTIONAL: We split Windows Data partition into 2 seperate partitions
+13-14GB for Windows Data, 13-14 GB for TWRP Data (format doesn't matter, ext4, ntfs,vfat)
+
+
+5) In the Android Image Kitchen's Ramdisk, go to /etc/recovery.fstab
+edit the fstab to match YOUR phone's mmcblk0pXX layout..
+e.g: if MainOS is mmcblk0p38, change fstab to mmcblk0p39 on the /system and /system_image lines
+Same for Windows Data, EFIESP (and TWRP Data if you set it up)
+
+
+
+6) repack the image with Android Image Kitchen so we get a new file 'ramdisk-new.cpio.gz' <-- this is the file we are booting with
+
+
+
+7) Same as Linux, copy the bootaa64.efi and dtb file to your Phone: /EFI/Boot/, and add my grub.cfg file and YOUR ramdisk-new.cpio.gz file
+
+
+
+8) edit grub.cfg. replace the start of these lines:
+
+linux /EFI/Boot/Image.gz
+
+to 
+
+linux /EFI/Boot/950xl.5.8-rc3.gz
+
+and 
+
+
+initrd /twrp-3.4.0-0-angler.img-ramdisk.cpio.gz
+
+to
+
+initrd /EFI/Boot/ramdisk-new.cpio.gz
+
+save grub.cfg and close
+
+
+
+
+9) disconnect the phone and boot, select TWRP from grub and *hopefully* it loads TWRP
+
+
+If you want the W10M theme:
+make folder in Windows Data Partition or TWRP Data Partition called TWRP, make folder inside TWRP called theme, 
+go to the ramdisk folder, go to /twres, copy ui.zip to Data's TWRP/theme folder
+Next time TWRP loads it should load the theme
+
+
+Credit to help me originally boot TWRP goes to https://twitter.com/J0Sh1X
+Thanks to Fadil Fadz on Testing and ideas and helping with flashing W10M zips
+
+This is a rough guide by me (empyreal96), not meant for wide use, just for people wanting to test.
+Let me know If I made an error somewhere
