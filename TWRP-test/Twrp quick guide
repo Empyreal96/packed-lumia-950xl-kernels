@@ -60,7 +60,7 @@ Same for Windows Data, EFIESP (and TWRP Data if you set it up)
 
 
 
-7) Same as Linux, copy the bootaa64.efi and dtb file to your Phone: /EFI/Boot/, and add my grub.cfg file and YOUR ramdisk-new.cpio.gz file
+7) Same as Linux, copy the bootaa64.efi and dtb file to your Phone: /EFI/Boot/, and add my grub.cfg + Kernel file and YOUR ramdisk-new.cpio.gz file
 
 
 
